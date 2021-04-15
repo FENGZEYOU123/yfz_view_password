@@ -4,13 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-  <androidx.viewpager.widget.ViewPager
-      android:id="@+id/viewPager"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
-  </androidx.viewpager.widget.ViewPager>
+    android:layout_height="match_parent">
+    <com.yfz.password.PasswordView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </com.yfz.password.PasswordView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

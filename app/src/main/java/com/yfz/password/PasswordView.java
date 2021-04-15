@@ -355,6 +355,10 @@ public class PasswordView extends LinearLayout {
                         closeSoftKeyboard(mEditText);
                     }
                     mIsLocked = mEnableLockCodeTextIfMaxCode ? true : false;
+                }else {
+                    if(null!=mOnResultListener) {
+                        mOnResultListener.input(text.toString());
+                    }
                 }
              postInvalidate();
 
@@ -529,6 +533,7 @@ public class PasswordView extends LinearLayout {
     //接口回调输入结果
     public interface OnResultListener {
         void finish(String result);
+        void input(String result);
     }
 
     //监听接口回调
