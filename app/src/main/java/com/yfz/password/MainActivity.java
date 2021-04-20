@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void inputing(String result) {
+            public void typing(String result) {
                 mTextView1.setText(result);
             }
         });
