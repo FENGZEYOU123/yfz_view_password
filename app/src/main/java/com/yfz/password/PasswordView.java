@@ -119,7 +119,7 @@ public class PasswordView extends LinearLayout {
         //是否隐藏输入内容
         mEnableHideCode =typedArray.getBoolean(R.styleable.PasswordView_password_enableHideCode, mEnableHideCode);
         //隐藏输入的内容,显示设置的文案
-        mEnableHideCode_text =typedArray.getString(R.styleable.PasswordView_password_enableHideCode_text);
+        mEnableHideCode_text =typedArray.getString(R.styleable.PasswordView_password_enableHideCodeText);
         //是否将没有输入内容的盒子隐藏
         mEnableHideNotInputBox =typedArray.getBoolean(R.styleable.PasswordView_password_enableHideBoxWhenNotInput, mEnableHideNotInputBox);
         //是否绘制高亮盒子
@@ -462,7 +462,9 @@ public class PasswordView extends LinearLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         if(mEnableCursor) {
-            mCursorTimer.scheduleAtFixedRate(mCursorTimerTask, 0, mCursorFrequency);
+            if(null!=mCursorTimer) {
+                mCursorTimer.scheduleAtFixedRate(mCursorTimerTask, 0, mCursorFrequency);
+            }
         }
     }
     //停止计时器，停止光标闪烁

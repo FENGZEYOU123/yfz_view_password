@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tittle"
-            android:text="密码输入框-默认样式（纯画笔）"
+            android:text="密码输入框-取消自动键盘，开启隐藏未输入盒子，开启隐藏输入后的内容"
             android:textSize="20dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content">
         </TextView>
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textView4"
             android:text="待输入……"
             android:textSize="14dp"
             android:layout_marginTop="20dp"
@@ -36,12 +36,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         </TextView>
+        <Button
+            android:id="@+id/buttonView4"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="@id/textView4"
+            app:layout_constraintBottom_toBottomOf="@+id/textView4"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="点击解锁"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </Button>
         <com.yfz.password.PasswordView
-            android:id="@+id/passwordView1"
-            app:layout_constraintTop_toBottomOf="@+id/textView1"
+            android:id="@+id/passwordView4"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            app:password_box_notInput_backgroundDrawable="@drawable/style2_not_input"
+            app:password_box_hasInput_backgroundDrawable="@drawable/style2_has_input"
+            app:password_box_highLight_backgroundDrawable="@drawable/style2_high_light"
+            app:password_text_setColor="@color/colorText"
+            app:password_cursorColor="@color/colorCursor"
+            app:password_enableLockTextView="true"
+            app:password_enableHighLight="true"
+            app:password_enableCursor="true"
+            app:password_enableHideBoxWhenNotInput="true"
+            app:password_enableHideCode="true"
+            app:password_enableHideCodeText="*"
+            app:password_enableSoftKeyboardAutoClose="false"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

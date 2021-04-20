@@ -6,11 +6,10 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -18,16 +17,21 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private ArrayList<View> mList=new ArrayList<>();
-    private View mView1,mView2,mView3;
+    private View mView1,mView2,mView3,mView4;
     private LayoutInflater layoutInflater;
-    private PasswordView mPasswordView1;
-    private TextView mTextView1;
+    private PasswordView mPasswordView1,mPasswordView2,mPasswordView3,mPasswordView4;
+    private TextView mTextView1,mTextView2,mTextView3,mTextView4;
+    private Button mButtonView3,mButtonView4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initialViewPager();
-        initialOnListener();
+        initialOnListenerStyle1();
+        initialOnListenerStyle2();
+        initialOnListenerStyle3();
+        initialOnListenerStyle4();
     }
     private void initialViewPager(){
         mViewPager=findViewById(R.id.viewPager);
@@ -35,14 +39,30 @@ public class MainActivity extends AppCompatActivity {
         mView1=layoutInflater.inflate(R.layout.style1,null);
         mView2=layoutInflater.inflate(R.layout.style2,null);
         mView3=layoutInflater.inflate(R.layout.style3,null);
+        mView4=layoutInflater.inflate(R.layout.style4,null);
         mList.add(mView1);
         mList.add(mView2);
         mList.add(mView3);
+        mList.add(mView4);
         mViewPager.setAdapter(new ViewPagerAdapter());
+        mViewPager.setOffscreenPageLimit(mList.size()-1);
+
         mPasswordView1= mView1.findViewById(R.id.passwordView1);
         mTextView1=mView1.findViewById(R.id.textView1);
+
+        mPasswordView2= mView2.findViewById(R.id.passwordView2);
+        mTextView2=mView2.findViewById(R.id.textView2);
+
+        mPasswordView3= mView3.findViewById(R.id.passwordView3);
+        mTextView3=mView3.findViewById(R.id.textView3);
+        mButtonView3=mView3.findViewById(R.id.buttonView3);
+
+        mPasswordView4= mView4.findViewById(R.id.passwordView4);
+        mTextView4=mView4.findViewById(R.id.textView4);
+        mButtonView4=mView4.findViewById(R.id.buttonView4);
+
     }
-    private void initialOnListener(){
+    private void initialOnListenerStyle1(){
 
         mPasswordView1.setOnResultListener(new PasswordView.OnResultListener() {
             @Override
@@ -56,8 +76,63 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    private void initialOnListenerStyle2(){
 
+        mPasswordView2.setOnResultListener(new PasswordView.OnResultListener() {
+            @Override
+            public void finish(String result) {
+                mTextView2.setText(result);
+            }
 
+            @Override
+            public void typing(String result) {
+                mTextView2.setText(result);
+            }
+        });
+    }
+    private void initialOnListenerStyle3(){
+
+        mPasswordView3.setOnResultListener(new PasswordView.OnResultListener() {
+            @Override
+            public void finish(String result) {
+                mTextView3.setText(result);
+                mButtonView3.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void typing(String result) {
+                mTextView3.setText(result);
+            }
+        });
+        mButtonView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPasswordView3.setUnLock();
+
+            }
+        });
+    }
+    private void initialOnListenerStyle4(){
+
+        mPasswordView4.setOnResultListener(new PasswordView.OnResultListener() {
+            @Override
+            public void finish(String result) {
+                mTextView4.setText(result);
+                mButtonView4.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void typing(String result) {
+                mTextView4.setText(result);
+            }
+        });
+        mButtonView4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPasswordView4.setUnLock();
+            }
+        });
+    }
     class ViewPagerAdapter extends PagerAdapter {
         @Override
         public int getCount() {
