@@ -394,7 +394,6 @@ public class PasswordView extends LinearLayout {
     }
     //绘制盒子 - 已输入过内容 boxAfter样式
     private void onDrawHasInput(Canvas canvas,int i){
-        if(null!= mBox_hasInput_backgroundDrawable) {  //如果有设置drawable，则绘制drawable
             if(mIsLocked && mEnableLockCodeTextIfMaxCode){ //如果开启了输入完毕锁定内容,则绘制boxLock样式
                 if(null!= mBox_locked_backgroundDrawable){//如果有设置高亮drawable,则绘制drawable,没有则用画笔绘制
                     mBox_locked_backgroundDrawable.setBounds((int)mBoxRectF.left,(int)mBoxRectF.top,(int)mBoxRectF.right,(int)mBoxRectF.bottom);
@@ -404,13 +403,16 @@ public class PasswordView extends LinearLayout {
                     canvas.drawRoundRect(mBoxRectF, mBox_default_radius, mBox_default_radius, mBox_default_paint);
                 }
             }else { //没有开启锁定,绘制正常的boxAfter样式
-                mBox_hasInput_backgroundDrawable.setBounds((int)mBoxRectF.left,(int)mBoxRectF.top,(int)mBoxRectF.right,(int)mBoxRectF.bottom);
-                mBox_hasInput_backgroundDrawable.draw(canvas);
+                if(null!= mBox_hasInput_backgroundDrawable) {  //如果有设置drawable，则绘制drawable
+                    mBox_hasInput_backgroundDrawable.setBounds((int)mBoxRectF.left,(int)mBoxRectF.top,(int)mBoxRectF.right,(int)mBoxRectF.bottom);
+                    mBox_hasInput_backgroundDrawable.draw(canvas);
+                }else {
+                    mBox_default_paint.setColor(mBox_default_hasInputColor);
+                    canvas.drawRoundRect(mBoxRectF, mBox_default_radius, mBox_default_radius, mBox_default_paint);
+                }
+
             }
-        }else {
-            mBox_default_paint.setColor(mBox_default_hasInputColor);
-            canvas.drawRoundRect(mBoxRectF, mBox_default_radius, mBox_default_radius, mBox_default_paint);
-        }
+
         //绘制输入的内容文字
         mPaintText.getTextBounds(mEnableHideCode ? mEnableHideCode_text : mCodeArray[i], 0, mCodeArray[i].length(), mTextRect);
         canvas.drawText(mEnableHideCode ? mEnableHideCode_text : mCodeArray[i], (mBoxRectF.left + mBoxRectF.right) / 2 - (mTextRect.left + mTextRect.right) / 2, (mBoxRectF.top + mBoxRectF.bottom) / 2 - (mTextRect.top + mTextRect.bottom) / 2, mPaintText);
@@ -488,7 +490,7 @@ public class PasswordView extends LinearLayout {
     //接口回调输入结果
     public interface OnResultListener {
         void finish(String result);
-        void typing(String result);
+        void typing(String typing);
     }
 
     //监听接口回调
