@@ -96,7 +96,8 @@ public class PasswordView extends LinearLayout {
     //光标
     private Timer mCursorTimer;//定时器
     private TimerTask mCursorTimerTask;//定时器任务
-    private Drawable mBox_cursor_backgroundDrawable;//背景
+    private Drawable mCursorBackgroundDrawable;//背景
+    private int mCursorColor;//颜色
     private int mCursorHeight =1;//上下边距
     private int mCursorWidth =1;//上下边距
     private int mCursorFrequency=500;//闪烁频率
@@ -118,7 +119,7 @@ public class PasswordView extends LinearLayout {
         //是否隐藏输入内容
         mEnableHideCode =typedArray.getBoolean(R.styleable.PasswordView_password_enableHideCode, mEnableHideCode);
         //隐藏输入的内容,显示设置的文案
-        mEnableHideCode_text =typedArray.getString(R.styleable.PasswordView_PasswordView_password_enableHideCode_text);
+        mEnableHideCode_text =typedArray.getString(R.styleable.PasswordView_password_enableHideCode_text);
         //是否将没有输入内容的盒子隐藏
         mEnableHideNotInputBox =typedArray.getBoolean(R.styleable.PasswordView_password_enableHideBoxWhenNotInput, mEnableHideNotInputBox);
         //是否绘制高亮盒子
@@ -130,13 +131,13 @@ public class PasswordView extends LinearLayout {
         //View背景Drawable
         mViewBackground =typedArray.getResourceId(R.styleable.PasswordView_password_viewBackground,Color.TRANSPARENT);
         //文字颜色
-        mTextColor=typedArray.getColor(R.styleable.PasswordView_password_textColor,mTextColor);
+        mTextColor=typedArray.getColor(R.styleable.PasswordView_password_text_setColor,mTextColor);
         //文字大小
-        mTextSize=typedArray.getInt(R.styleable.PasswordView_password_textSizePx,mTextSize);
+        mTextSize=typedArray.getInt(R.styleable.PasswordView_password_text_setSize,mTextSize);
         //文字输入框类型
-        mTextInputType=typedArray.getInt(R.styleable.PasswordView_password_textInputType,mTextInputType);
+        mTextInputType=typedArray.getInt(R.styleable.PasswordView_password_text_setInputType,mTextInputType);
         //文字粗细
-        mTextBold=typedArray.getBoolean(R.styleable.PasswordView_password_textBold,mTextBold);
+        mTextBold=typedArray.getBoolean(R.styleable.PasswordView_password_text_setIsBold,mTextBold);
         //设置盒子总数量
         mBox_setNumber =typedArray.getInt(R.styleable.PasswordView_password_box_setNumber, mBox_setNumber);
         //设置盒子间距
@@ -144,21 +145,23 @@ public class PasswordView extends LinearLayout {
         //设置盒子大小
         mBox_setSize =typedArray.getInt(R.styleable.PasswordView_password_box_setSize, mBox_setSize);
         //设置盒子-未输入的背景Drawable
-        mBox_notInput_backgroundDrawable =typedArray.getDrawable(R.styleable.PasswordView_password_box_setBackgroundDrawable);
+        mBox_notInput_backgroundDrawable =typedArray.getDrawable(R.styleable.PasswordView_password_box_notInput_backgroundDrawable);
         //设置盒子-输入后的背景Drawable
-        mBox_hasInput_backgroundDrawable =typedArray.getDrawable(R.styleable.PasswordView_password_boxAfterBackgroundDrawable);
+        mBox_hasInput_backgroundDrawable =typedArray.getDrawable(R.styleable.PasswordView_password_box_hasInput_backgroundDrawable);
         //设置盒子-高亮的背景Drawable
-        mBox_highLight_backgroundDrawable =typedArray.getDrawable(R.styleable.PasswordView_password_boxHighLightBackgroundDrawable);
+        mBox_highLight_backgroundDrawable =typedArray.getDrawable(R.styleable.PasswordView_password_box_highLight_backgroundDrawable);
         //设置盒子-锁定状态下的背景Drawable
-        mBox_locked_backgroundDrawable =typedArray.getDrawable(R.styleable.PasswordView_password_boxLockBackgroundDrawable);
+        mBox_locked_backgroundDrawable =typedArray.getDrawable(R.styleable.PasswordView_password_box_locked_backgroundDrawable);
         //设置光标高度
         mCursorHeight =typedArray.getInt(R.styleable.PasswordView_password_cursorHeight,mCursorHeight);
         //设置光标宽度
         mCursorWidth =typedArray.getInt(R.styleable.PasswordView_password_cursorWidth,mCursorWidth);
         //设置光标闪烁频率
         mCursorFrequency=typedArray.getInt(R.styleable.PasswordView_password_cursorFrequencyMillisecond,mCursorFrequency);
+        //设置光标颜色
+        mCursorColor=typedArray.getInt(R.styleable.PasswordView_password_cursorColor,mBox_default_cursorColor);
         //设置光标背景
-        mBox_cursor_backgroundDrawable =typedArray.getDrawable(R.styleable.PasswordView_password_cursorBackgroundDrawable);
+        mCursorBackgroundDrawable =typedArray.getDrawable(R.styleable.PasswordView_password_cursorBackgroundDrawable);
         //回收
         typedArray.recycle();
         //初始化
@@ -433,18 +436,18 @@ public class PasswordView extends LinearLayout {
     }
     //绘制-光标
     private void onDrawCursor(Canvas canvas,Paint paint,RectF rectF){
-            if(null!= mBox_cursor_backgroundDrawable){
-                mBox_cursor_backgroundDrawable.setBounds(
+            if(null!= mCursorBackgroundDrawable){
+                mCursorBackgroundDrawable.setBounds(
                         (int)((rectF.left + rectF.right) / 2 - mCursorWidth),
                         (int)(mCursorHeight <= 1 ? (rectF.top + rectF.bottom) / 4:mCursorHeight ),
                         (int)((rectF.left + rectF.right) / 2 + mCursorWidth),
                         (int) (rectF.bottom - (mCursorHeight <= 1 ? (rectF.top + rectF.bottom) / 4:mCursorHeight ))
                 );
                 if((mCursorDisplayingByTimer || mCursorDisplayingByIndex) ){
-                    mBox_cursor_backgroundDrawable.draw(canvas);
+                    mCursorBackgroundDrawable.draw(canvas);
                 }
             }else {
-                paint.setColor((mCursorDisplayingByTimer || mCursorDisplayingByIndex) ? mBox_default_cursorColor : Color.TRANSPARENT);
+                paint.setColor((mCursorDisplayingByTimer || mCursorDisplayingByIndex) ? mCursorColor : Color.TRANSPARENT);
                 canvas.drawRect(
                         (float) ((rectF.left + rectF.right) / 2 - mCursorWidth),
                         (float) (mCursorHeight <= 1 ? (rectF.top + rectF.bottom) / 4:mCursorHeight ),
