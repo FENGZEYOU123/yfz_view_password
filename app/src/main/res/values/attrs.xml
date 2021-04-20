@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="PasswordCode">
+    <declare-styleable name="PasswordView">
         <attr name="password_viewBackground" format="reference|color"></attr>
         <attr name="password_enableHideCode" format="boolean"></attr>
         <attr name="password_enableHideBoxWhenNotInput" format="boolean"></attr>
@@ -28,8 +28,8 @@
         <attr name="password_boxLength" format="integer"></attr>
         <attr name="password_boxMargin" format="integer"></attr>
         <attr name="password_boxSizeDp" format="integer"></attr>
-        <attr name="password_boxBackgroundColor" format="color"></attr>
-        <attr name="password_boxBackgroundDrawable" format="reference|color"></attr>
+        <attr name="password_boxBeforeBackgroundColor" format="color"></attr>
+        <attr name="password_boxBeforeBackgroundDrawable" format="reference|color"></attr>
         <attr name="password_boxRadius" format="float"></attr>
 
         <attr name="password_boxHighLightRadius" format="float"></attr>
