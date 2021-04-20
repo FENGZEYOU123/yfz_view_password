@@ -42,6 +42,12 @@ import java.util.TimerTask;
  */
 
 public class PasswordView extends LinearLayout {
+    private final static String TAG= PasswordView.class.getName();
+    private Context mContext;
+    private int measureWidthMode =0;
+    private int measureWidthSize =0;
+    private int measureHeightMode =0;
+    private int measureHeightSize =0;
 
     private boolean mEnableHideCode =false;//是否隐藏输入code
     private boolean mEnableHighLight=true;//是否开启高亮
@@ -51,21 +57,22 @@ public class PasswordView extends LinearLayout {
     private boolean mEnableSoftKeyboardAutoClose=true;//是否自动关闭软键盘（输入内容长度==最大长度）
     private boolean mEnableLockCodeTextIfMaxCode =false;//是否限制输满后锁定view
 
+    //默认设置-盒子画笔相关
+    private final String DEFAULT_HIDE_CONTENT="*";//隐藏输入过的盒子展示的内容
+    private int mBox_hasInputColor=Color.RED; //盒子输入过的颜色
+    private int mBox_notInputColor=Color.BLUE; //盒子未输入过的颜色
+    private int mBox_highLightColor=Color.CYAN; //盒子高亮的颜色
+    private int mBox_cursorColor=Color.BLACK; //盒子光标的颜色
+    private int mBox_lockColor=Color.GRAY; //盒子锁定状态下的颜色
+    private int mBox_strokeWidth=1; //盒子宽度
+    //输入框样式
     private final int TEXT_INPUT_TYPE_NUMBER=200, TEXT_INPUT_TYPE_PHONE =201, TEXT_INPUT_TYPE_TEXT =202,TEXT_INPUT_TYPE_DATETIME=203;
-    private final String DEFAULT_HIDE_CONTENT="*";
 
-    private int mStrokeWidth=1;
     private boolean mIsEnableLock=false;
     private boolean mIsLocked=false;
     private boolean mIsCodeFull =false;
     private int mIsFirstTime=0;
-    private final String TAG= PasswordView.class.getName();
 
-    private Context mContext;
-    private int measureWidthMode =0;
-    private int measureWidthSize =0;
-    private int measureHeightMode =0;
-    private int measureHeightSize =0;
     private OnResultListener mOnResultListener;
     private InputMethodManager inputMethodManager;
     //组件
@@ -83,9 +90,7 @@ public class PasswordView extends LinearLayout {
     //高亮盒子
     private int mBoxHighLightIndex =0;//下坐标
     private Drawable mBoxHighBackgroundDrawable;//背景
-    private int mBoxHighLightBackgroundColor =Color.BLUE;//颜色
-    //输入后的盒子
-    private int mBoxAfterBackgroundColor =Color.RED;//背景
+    //输入内容后的盒子背景
     private Drawable mBoxAfterBackgroundDrawable;//背景
     //文字
     private Paint mPaintText;//笔刷
@@ -257,7 +262,6 @@ public class PasswordView extends LinearLayout {
     }
     //初始化-笔刷
     private void initialPaint(){
-        this.mStrokeWidth = DisplayUtils.dip2px(mContext, mStrokeWidth);
         //文字
         this.mPaintText=new Paint(Paint.ANTI_ALIAS_FLAG);
         this.mPaintText.setStyle(Paint.Style.FILL);
@@ -267,7 +271,7 @@ public class PasswordView extends LinearLayout {
         //盒子
         this.mPaintBox=new Paint(Paint.ANTI_ALIAS_FLAG);
         this.mPaintBox.setStyle(Paint.Style.STROKE);
-        this.mPaintBox.setStrokeWidth(mStrokeWidth);
+        this.mPaintBox.setStrokeWidth(DisplayUtils.dip2px(mContext, mBox_strokeWidth));
         //光标
         this.mCursorPaint=new Paint(Paint.ANTI_ALIAS_FLAG);
         this.mCursorPaint.setColor(mCursorBackgroundColor);
@@ -370,6 +374,7 @@ public class PasswordView extends LinearLayout {
                     mBoxHighBackgroundDrawable.setBounds((int)mBoxRectF.left,(int)mBoxRectF.top,(int)mBoxRectF.right,(int)mBoxRectF.bottom);
                     mBoxHighBackgroundDrawable.draw(canvas);
                 }else {
+                    mPaintBox.setColor(mBox_highLightColor);
                     canvas.drawRoundRect(mBoxRectF, mBoxRadius, mBoxRadius, mPaintBox);
                 }
                     onDrawCursor(canvas, mCursorPaint, mBoxRectF);
@@ -381,6 +386,7 @@ public class PasswordView extends LinearLayout {
                                 mBoxLockBackgroundDrawable.setBounds((int)mBoxRectF.left,(int)mBoxRectF.top,(int)mBoxRectF.right,(int)mBoxRectF.bottom);
                                 mBoxLockBackgroundDrawable.draw(canvas);
                             }else {
+                                mPaintBox.setColor(mBox_lockColor);
                                 canvas.drawRoundRect(mBoxRectF, mBoxRadius, mBoxRadius, mPaintBox);
                             }
                         }else { //没有开启锁定,绘制正常的boxAfter样式
@@ -388,6 +394,7 @@ public class PasswordView extends LinearLayout {
                             mBoxAfterBackgroundDrawable.draw(canvas);
                         }
                     }else {
+                        mPaintBox.setColor(mBox_hasInputColor);
                         canvas.drawRoundRect(mBoxRectF, mBoxRadius, mBoxRadius, mPaintBox);
                     }
                 }else {  //绘制未输入内容的盒子,mBox_setBackgroundDrawable样式
@@ -396,6 +403,7 @@ public class PasswordView extends LinearLayout {
                             mBox_setBackgroundDrawable.setBounds((int)mBoxRectF.left,(int)mBoxRectF.top,(int)mBoxRectF.right,(int)mBoxRectF.bottom);
                             mBox_setBackgroundDrawable.draw(canvas);
                         } else {
+                            mPaintBox.setColor(mBox_notInputColor);
                             canvas.drawRoundRect(mBoxRectF, mBoxRadius, mBoxRadius, mPaintBox);
                         }
                     }
@@ -410,6 +418,7 @@ public class PasswordView extends LinearLayout {
                     mBox_setBackgroundDrawable.setBounds((int)mBoxRectF.left,(int)mBoxRectF.top,(int)mBoxRectF.right,(int)mBoxRectF.bottom);
                     mBox_setBackgroundDrawable.draw(canvas);
                 }else{
+                    mPaintBox.setColor(mBox_notInputColor);
                     canvas.drawRoundRect(mBoxRectF, mBoxRadius, mBoxRadius, mPaintBox);
                 }
             }

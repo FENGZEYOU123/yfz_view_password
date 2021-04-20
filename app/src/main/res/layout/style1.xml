@@ -42,9 +42,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:password_box_setBackgroundDrawable="@drawable/style1_has_input"
             app:password_enableCursor="true"
-            app:password_enableLockTextView="false"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
