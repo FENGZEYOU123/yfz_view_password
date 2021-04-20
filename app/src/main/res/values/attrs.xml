@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="PasswordVIew">
+    <declare-styleable name="PasswordView">
         <attr name="password_viewBackground" format="reference|color"></attr>
         <attr name="password_enableHideCode" format="boolean"></attr>
         <attr name="password_enableHideBoxWhenNotInput" format="boolean"></attr>
@@ -21,32 +21,14 @@
         </attr>
         <attr name="password_textBold" format="boolean"></attr>
 
-        <attr name="password_boxStrokeStyle">
-            <enum name="Stroke" value="101" />
-            <enum name="Filled" value="100" />
-        </attr>
-        <attr name="password_boxLength" format="integer"></attr>
-        <attr name="password_boxMargin" format="integer"></attr>
-        <attr name="password_boxSizeDp" format="integer"></attr>
-        <attr name="password_boxBackgroundColor" format="color"></attr>
-        <attr name="password_boxBackgroundDrawable" format="reference|color"></attr>
-        <attr name="password_boxRadius" format="float"></attr>
+        <attr name="password_box_setNumber" format="integer"></attr>
+        <attr name="password_box_setMargin" format="integer"></attr>
+        <attr name="password_box_setSize" format="integer"></attr>
+        <attr name="password_box_setBackgroundDrawable" format="reference|color"></attr>
 
-        <attr name="password_boxHighLightRadius" format="float"></attr>
-        <attr name="password_boxHighLightBackgroundColor" format="color"></attr>
         <attr name="password_boxHighLightBackgroundDrawable" format="reference|color"></attr>
-        <attr name="password_boxHighLightStrokeStyle">
-            <enum name="Stroke" value="101" />
-            <enum name="Filled" value="100" />
-        </attr>
-
-        <attr name="password_boxAfterRadius" format="float"></attr>
-        <attr name="password_boxAfterBackgroundColor" format="color"></attr>
         <attr name="password_boxAfterBackgroundDrawable" format="reference|color"></attr>
-        <attr name="password_boxAfterStrokeStyle">
-            <enum name="Stroke" value="101" />
-            <enum name="Filled" value="100" />
-        </attr>
+
         <attr name="password_cursorBackgroundColor" format="color"></attr>
         <attr name="password_cursorHeight" format="integer"></attr>
         <attr name="password_cursorWidth" format="integer"></attr>
@@ -56,10 +38,7 @@
         <attr name="password_boxLockTextColor" format="color"></attr>
         <attr name="password_boxLockBackgroundColor" format="color"></attr>
         <attr name="password_boxLockBackgroundDrawable" format="reference|color"></attr>
-        <attr name="password_boxLockStrokeStyle">
-            <enum name="Stroke" value="101" />
-            <enum name="Filled" value="100" />
-        </attr>
+
     </declare-styleable>
 
 </resources>
