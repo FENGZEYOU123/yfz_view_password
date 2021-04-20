@@ -17,11 +17,11 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private ArrayList<View> mList=new ArrayList<>();
-    private View mView1,mView2,mView3,mView4;
+    private View mView1,mView2,mView3,mView4,mView5;
     private LayoutInflater layoutInflater;
-    private PasswordView mPasswordView1,mPasswordView2,mPasswordView3,mPasswordView4;
-    private TextView mTextView1,mTextView2,mTextView3,mTextView4;
-    private Button mButtonView3,mButtonView4;
+    private PasswordView mPasswordView1,mPasswordView2,mPasswordView3,mPasswordView4,mPasswordView5;
+    private TextView mTextView1,mTextView2,mTextView3,mTextView4,mTextView5;
+    private Button mButtonView3,mButtonView4,mButtonView5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         initialOnListenerStyle2();
         initialOnListenerStyle3();
         initialOnListenerStyle4();
+        initialOnListenerStyle5();
+
     }
     private void initialViewPager(){
         mViewPager=findViewById(R.id.viewPager);
@@ -40,10 +42,12 @@ public class MainActivity extends AppCompatActivity {
         mView2=layoutInflater.inflate(R.layout.style2,null);
         mView3=layoutInflater.inflate(R.layout.style3,null);
         mView4=layoutInflater.inflate(R.layout.style4,null);
+        mView5=layoutInflater.inflate(R.layout.style5,null);
         mList.add(mView1);
         mList.add(mView2);
         mList.add(mView3);
         mList.add(mView4);
+        mList.add(mView5);
         mViewPager.setAdapter(new ViewPagerAdapter());
         mViewPager.setOffscreenPageLimit(mList.size()-1);
 
@@ -60,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
         mPasswordView4= mView4.findViewById(R.id.passwordView4);
         mTextView4=mView4.findViewById(R.id.textView4);
         mButtonView4=mView4.findViewById(R.id.buttonView4);
+
+        mPasswordView5= mView5.findViewById(R.id.passwordView5);
+        mTextView5=mView5.findViewById(R.id.textView5);
+        mButtonView5=mView5.findViewById(R.id.buttonView5);
 
     }
     private void initialOnListenerStyle1(){
@@ -130,6 +138,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mPasswordView4.setUnLock();
+            }
+        });
+    }
+    private void initialOnListenerStyle5(){
+
+        mPasswordView5.setOnResultListener(new PasswordView.OnResultListener() {
+            @Override
+            public void finish(String result) {
+                mTextView5.setText(result);
+                mButtonView5.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void typing(String result) {
+                mTextView5.setText(result);
+            }
+        });
+        mButtonView5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPasswordView5.setUnLock();
             }
         });
     }
