@@ -279,7 +279,7 @@ public class PasswordView extends LinearLayout {
             view.setOnTouchListener(new OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                  if(event.getAction()==MotionEvent.ACTION_UP && !mIsLocked) {
+                  if(event.getAction()==MotionEvent.ACTION_UP && (!mIsLocked || !mEnableLockCodeTextIfMaxCode )) {
                           openSoftKeyboard(mEditText);
                   }
                     return true;
@@ -297,7 +297,7 @@ public class PasswordView extends LinearLayout {
         }
         @Override
         public void afterTextChanged(Editable text) {
-            mBoxHighLightIndex=text.length();
+            mBoxHighLightIndex=text.length(); //高亮盒子下坐标=当前输入内容长度
             if(null!= mCodeArray ) {
                     for (int i = 0; i< mBox_setNumber; i++){
                         if(i<=text.length()-1) {
@@ -315,7 +315,7 @@ public class PasswordView extends LinearLayout {
                     if(mEnableSoftKeyboardAutoClose || mIsEnableLock){
                         closeSoftKeyboard(mEditText);
                     }
-                    mIsLocked = mEnableLockCodeTextIfMaxCode ? true : false;
+                    mIsLocked = true ;
                 }else {
                     if(null!=mOnResultListener) {
                         mOnResultListener.inputing(text.toString());
@@ -365,37 +365,34 @@ public class PasswordView extends LinearLayout {
             mBoxRectF.top    = 0;
             mBoxRectF.right  = mBoxRectF.left + mBox_setSize;
             mBoxRectF.bottom = getHeight();
-
-            if(mEnableHighLight && i == mBoxHighLightIndex){ //如果开启了高亮,则绘制高亮盒子.
-                if(null!= mBoxHighBackgroundDrawable) {  //有设置高亮drawable,则绘制drawable,没有则用画笔绘制
+            if(mEnableHighLight && i == mBoxHighLightIndex){ //如果开启了高亮 且 i==高亮index,则绘制boxHigh样式.
+                if(null!= mBoxHighBackgroundDrawable) {  //如果有设置高亮drawable,则绘制drawable,没有则用画笔绘制
                     mBoxHighBackgroundDrawable.setBounds((int)mBoxRectF.left,(int)mBoxRectF.top,(int)mBoxRectF.right,(int)mBoxRectF.bottom);
                     mBoxHighBackgroundDrawable.draw(canvas);
                 }else {
                     canvas.drawRoundRect(mBoxRectF, mBoxRadius, mBoxRadius, mPaintBox);
                 }
                     onDrawCursor(canvas, mCursorPaint, mBoxRectF);
-            } else if (null != mCodeArray[i]) {
-
+            } else if (null != mCodeArray[i]) { //如果盒子已被输入内容,则绘制boxAfter样式
                 if(i<mBoxHighLightIndex){
-                    if(null!=mBoxAfterBackgroundDrawable) {  //如果有规定drawable，则使用drawable
-                        if(mIsLocked){
-                            if(null!=mBoxLockBackgroundDrawable){
+                    if(null!=mBoxAfterBackgroundDrawable) {  //如果有设置drawable，则绘制drawable
+                        if(mIsLocked && mEnableLockCodeTextIfMaxCode){ //如果开启了输入完毕锁定内容,则绘制boxLock样式
+                            if(null!=mBoxLockBackgroundDrawable){//如果有设置高亮drawable,则绘制drawable,没有则用画笔绘制
                                 mBoxLockBackgroundDrawable.setBounds((int)mBoxRectF.left,(int)mBoxRectF.top,(int)mBoxRectF.right,(int)mBoxRectF.bottom);
                                 mBoxLockBackgroundDrawable.draw(canvas);
                             }else {
                                 canvas.drawRoundRect(mBoxRectF, mBoxRadius, mBoxRadius, mPaintBox);
                             }
-                        }else {
+                        }else { //没有开启锁定,绘制正常的boxAfter样式
                             mBoxAfterBackgroundDrawable.setBounds((int)mBoxRectF.left,(int)mBoxRectF.top,(int)mBoxRectF.right,(int)mBoxRectF.bottom);
                             mBoxAfterBackgroundDrawable.draw(canvas);
                         }
                     }else {
                         canvas.drawRoundRect(mBoxRectF, mBoxRadius, mBoxRadius, mPaintBox);
                     }
-                }else {
-                    if(!mEnableHideNotInputBox) {
-//                        mPaintBox.setColor((mIsLocked && mBoxLockBackgroundColor != -1) ? mBoxLockBackgroundColor);
-                        if (null != mBox_setBackgroundDrawable) {
+                }else {  //绘制未输入内容的盒子,mBox_setBackgroundDrawable样式
+                    if(!mEnableHideNotInputBox) { //如果开启了隐藏未输入内容,则不进行绘制
+                        if (null != mBox_setBackgroundDrawable) {  //
                             mBox_setBackgroundDrawable.setBounds((int)mBoxRectF.left,(int)mBoxRectF.top,(int)mBoxRectF.right,(int)mBoxRectF.bottom);
                             mBox_setBackgroundDrawable.draw(canvas);
                         } else {
@@ -403,16 +400,16 @@ public class PasswordView extends LinearLayout {
                         }
                     }
                 }
+                //绘制输入的内容
                 mPaintText.setColor((mIsLocked&&mBoxLockTextColor!=-1)?mBoxLockTextColor: mTextColor);
                 mPaintText.getTextBounds(mEnableHideCode ?mHideCodeString: mCodeArray[i], 0, mCodeArray[i].length(), mTextRect);
                 if(mCodeArray[i].length()>0)
                 canvas.drawText(mEnableHideCode ?mHideCodeString: mCodeArray[i], (mBoxRectF.left + mBoxRectF.right) / 2 - (mTextRect.left + mTextRect.right) / 2, (mBoxRectF.top + mBoxRectF.bottom) / 2 - (mTextRect.top + mTextRect.bottom) / 2, mPaintText);
-            }else if(!mEnableHideNotInputBox){
+            }else if(!mEnableHideNotInputBox){  //绘制未输入内容的盒子,mBox_setBackgroundDrawable样式
                 if(null!= mBox_setBackgroundDrawable) {  //如果有规定drawable，则使用drawable
                     mBox_setBackgroundDrawable.setBounds((int)mBoxRectF.left,(int)mBoxRectF.top,(int)mBoxRectF.right,(int)mBoxRectF.bottom);
                     mBox_setBackgroundDrawable.draw(canvas);
                 }else{
-//                    mPaintBox.setColor(mBoxBackgroundColor);
                     canvas.drawRoundRect(mBoxRectF, mBoxRadius, mBoxRadius, mPaintBox);
                 }
             }
