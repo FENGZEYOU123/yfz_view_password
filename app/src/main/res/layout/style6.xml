@@ -46,7 +46,7 @@
             app:password_box_hasInput_backgroundDrawable="@drawable/style2_has_input"
             app:password_enableHighLight="true"
             app:password_box_highLight_backgroundDrawable="@drawable/style2_high_light"
-            app:password_viewBackground="@drawable/style2_locked"
+            app:password_setViewBackground="@drawable/style2_locked"
             app:password_text_setInputType="Text"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"

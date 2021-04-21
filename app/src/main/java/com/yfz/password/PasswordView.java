@@ -135,7 +135,7 @@ public class PasswordView extends LinearLayout {
         //是否锁定组件当输入满长度后(禁止点击,可以主动setUnLock()调解除锁定)
         mEnableLockCodeTextIfMaxCode =typedArray.getBoolean(R.styleable.PasswordView_password_enableLockTextView, mEnableLockCodeTextIfMaxCode);
         //View背景Drawable
-        mViewBackground =typedArray.getResourceId(R.styleable.PasswordView_password_viewBackground,Color.TRANSPARENT);
+        mViewBackground =typedArray.getResourceId(R.styleable.PasswordView_password_setViewBackground,Color.TRANSPARENT);
         //文字颜色
         mTextColor=typedArray.getColor(R.styleable.PasswordView_password_text_setColor,mTextColor);
         //文字大小

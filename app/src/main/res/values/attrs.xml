@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="PasswordView">
-        <attr name="password_viewBackground" format="reference|color"></attr>
+        <attr name="password_setViewBackground" format="reference|color"></attr>
         <attr name="password_enableHideCode" format="boolean"></attr>
         <attr name="password_enableHideBoxWhenNotInput" format="boolean"></attr>
         <attr name="password_enableHideCodeText" format="string"></attr>
