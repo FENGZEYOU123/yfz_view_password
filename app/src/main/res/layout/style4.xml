@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tittle"
-            android:text="密码输入框-取消键盘自动关闭，开启隐藏未输入盒子，开启隐藏输入后的内容"
+            android:text="密码输入框-取消键盘自动关闭，开启隐藏未输入盒子，开启隐藏输入后的内容,更改光标颜色"
             android:textSize="20dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
