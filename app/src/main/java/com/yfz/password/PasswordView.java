@@ -29,8 +29,14 @@ import java.util.TimerTask;
 /**
  * 简介：自定义验证码输入框 (组合+自绘)
  * 作者：游丰泽
- * 主要功能: （以下功能涉及到盒子样式的改变，均可单独控制功能的盒子样式,默认为线，可自定设置backgroundDrawable替代）
- *           password_box 基础盒子，password_boxAfter输入内容后的盒子，password_boxHighLight 高亮盒子，password_boxLock 锁住状态下盒子
+ * 主要功能: （
+ * 以下功能涉及到盒子样式的改变，均可单独控制功能的盒子样式,默认为画笔，可自定设置backgroundDrawable替代）
+ *
+ * mBox_notInput_backgroundDrawable;//盒子未输入内容背景Drawable
+ * mBox_hasInput_backgroundDrawable;//盒子已输入内容背景Drawable
+ * mBox_highLight_backgroundDrawable;//盒子高亮背景Drawable
+ * mBox_locked_backgroundDrawable;//盒子锁定状态下背景Drawable
+ *
  * mEnableHideCode 是否隐藏输入内容
  * mEnableHighLight 是否开启高亮
  * mEnableCursor 是否开启光标
