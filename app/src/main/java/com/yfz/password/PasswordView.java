@@ -125,7 +125,7 @@ public class PasswordView extends LinearLayout {
         //是否隐藏输入内容
         mEnableHideCode =typedArray.getBoolean(R.styleable.PasswordView_password_enableHideCode, mEnableHideCode);
         //隐藏输入的内容,显示设置的文案
-        mEnableHideCode_text =typedArray.getString(R.styleable.PasswordView_password_enableHideCodeText);
+        mEnableHideCode_text =typedArray.getString(R.styleable.PasswordView_password_enableHideCodeSetText);
         //是否将没有输入内容的盒子隐藏
         mEnableHideNotInputBox =typedArray.getBoolean(R.styleable.PasswordView_password_enableHideBoxWhenNotInput, mEnableHideNotInputBox);
         //是否绘制高亮盒子
