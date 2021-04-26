@@ -206,12 +206,12 @@ public class PasswordView extends LinearLayout {
     @SuppressLint("ResourceType")
     private void initial(Context context){
         this.mContext=context;
-            try{
-                Drawable drawable= getResources().getDrawable(mViewBackground);
-                this.setBackground(drawable);
-            }catch (Exception e){
-                this.setBackgroundColor(mViewBackground);
-            }
+        try{
+            Drawable drawable= getResources().getDrawable(mViewBackground);
+            this.setBackground(drawable);
+        }catch (Exception e){
+            this.setBackgroundColor(mViewBackground);
+        }
         mCodeArray =new String[mBox_setNumber];
         for(int i=0;i<mCodeArray.length;i++){
             mCodeArray[i]="";
@@ -268,9 +268,9 @@ public class PasswordView extends LinearLayout {
     }
     //初始化-盒子和位置
     private void initialBoxAndRectPosition(){
-        this.mBox_setSize = DisplayUtils.dip2px(mContext, mBox_setSize);
-        this.mBox_setMargin = DisplayUtils.dip2px(mContext, mBox_setMargin);
-        this.mBox_default_radius = DisplayUtils.dip2pxFloat(mContext, mBox_default_radius);
+        this.mBox_setSize = dip2px(mContext, mBox_setSize);
+        this.mBox_setMargin = dip2px(mContext, mBox_setMargin);
+        this.mBox_default_radius = dip2pxFloat(mContext, mBox_default_radius);
         this.mBoxRectF=new RectF();
         this.mTextRect=new Rect();
     }
@@ -279,13 +279,13 @@ public class PasswordView extends LinearLayout {
         //文字
         this.mPaintText=new Paint(Paint.ANTI_ALIAS_FLAG);
         this.mPaintText.setStyle(Paint.Style.FILL);
-        this.mPaintText.setTextSize(DisplayUtils.dip2px(this.getContext(),mTextSize)*2);
+        this.mPaintText.setTextSize(dip2px(this.getContext(),mTextSize)*2);
         this.mPaintText.setColor(mTextColor);
         this.mPaintText.setFakeBoldText(mTextBold);
         //盒子
         this.mBox_default_paint =new Paint(Paint.ANTI_ALIAS_FLAG);
         this.mBox_default_paint.setStyle(Paint.Style.STROKE);
-        this.mBox_default_paint.setStrokeWidth(DisplayUtils.dip2px(mContext, mBox_default_strokeWidth));
+        this.mBox_default_paint.setStrokeWidth(dip2px(mContext, mBox_default_strokeWidth));
 
     }
     //监听点击事件-打开弹窗
@@ -294,9 +294,9 @@ public class PasswordView extends LinearLayout {
             view.setOnTouchListener(new OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                  if(event.getAction()==MotionEvent.ACTION_UP && (!mIsLocked || !mEnableLockCodeTextIfMaxCode )) {
-                          openSoftKeyboard(mEditText);
-                  }
+                    if(event.getAction()==MotionEvent.ACTION_UP && (!mIsLocked || !mEnableLockCodeTextIfMaxCode )) {
+                        openSoftKeyboard(mEditText);
+                    }
                     return true;
                 }
             });
@@ -314,14 +314,14 @@ public class PasswordView extends LinearLayout {
         public void afterTextChanged(Editable text) {
             mBox_nextInputIndex =text.length(); //高亮盒子下坐标=当前输入内容长度
             if(null!= mCodeArray ) {
-                    for (int i = 0; i< mBox_setNumber; i++){
-                        if(i<=text.length()-1) {
-                            mCodeArray[i] = text.toString().substring(i, i + 1);
-                        }else {
-                            mCodeArray[i] = "";
-                        }
+                for (int i = 0; i< mBox_setNumber; i++){
+                    if(i<=text.length()-1) {
+                        mCodeArray[i] = text.toString().substring(i, i + 1);
+                    }else {
+                        mCodeArray[i] = "";
                     }
-                    mCursorDisplayingByIndex=true;
+                }
+                mCursorDisplayingByIndex=true;
                 if( text.length()== mBox_setNumber){ //内容长度与盒子数量一致->返回回调结果
                     mIsCodeFull = true;
                     if(null!=mOnResultListener) {
@@ -336,7 +336,7 @@ public class PasswordView extends LinearLayout {
                         mOnResultListener.typing(text.toString());
                     }
                 }
-             postInvalidate();
+                postInvalidate();
 
             }
         }
@@ -403,24 +403,24 @@ public class PasswordView extends LinearLayout {
     }
     //绘制盒子 - 已输入过内容 boxAfter样式
     private void onDrawHasInput(Canvas canvas,int i){
-            if(mIsLocked && mEnableLockCodeTextIfMaxCode){ //如果开启了输入完毕锁定内容,则绘制boxLock样式
-                if(null!= mBox_locked_backgroundDrawable){//如果有设置高亮drawable,则绘制drawable,没有则用画笔绘制
-                    mBox_locked_backgroundDrawable.setBounds((int)mBoxRectF.left,(int)mBoxRectF.top,(int)mBoxRectF.right,(int)mBoxRectF.bottom);
-                    mBox_locked_backgroundDrawable.draw(canvas);
-                }else {
-                    mBox_default_paint.setColor(mBox_default_lockColor);
-                    canvas.drawRoundRect(mBoxRectF, mBox_default_radius, mBox_default_radius, mBox_default_paint);
-                }
-            }else { //没有开启锁定,绘制正常的boxAfter样式
-                if(null!= mBox_hasInput_backgroundDrawable) {  //如果有设置drawable，则绘制drawable
-                    mBox_hasInput_backgroundDrawable.setBounds((int)mBoxRectF.left,(int)mBoxRectF.top,(int)mBoxRectF.right,(int)mBoxRectF.bottom);
-                    mBox_hasInput_backgroundDrawable.draw(canvas);
-                }else {
-                    mBox_default_paint.setColor(mBox_default_hasInputColor);
-                    canvas.drawRoundRect(mBoxRectF, mBox_default_radius, mBox_default_radius, mBox_default_paint);
-                }
-
+        if(mIsLocked && mEnableLockCodeTextIfMaxCode){ //如果开启了输入完毕锁定内容,则绘制boxLock样式
+            if(null!= mBox_locked_backgroundDrawable){//如果有设置高亮drawable,则绘制drawable,没有则用画笔绘制
+                mBox_locked_backgroundDrawable.setBounds((int)mBoxRectF.left,(int)mBoxRectF.top,(int)mBoxRectF.right,(int)mBoxRectF.bottom);
+                mBox_locked_backgroundDrawable.draw(canvas);
+            }else {
+                mBox_default_paint.setColor(mBox_default_lockColor);
+                canvas.drawRoundRect(mBoxRectF, mBox_default_radius, mBox_default_radius, mBox_default_paint);
             }
+        }else { //没有开启锁定,绘制正常的boxAfter样式
+            if(null!= mBox_hasInput_backgroundDrawable) {  //如果有设置drawable，则绘制drawable
+                mBox_hasInput_backgroundDrawable.setBounds((int)mBoxRectF.left,(int)mBoxRectF.top,(int)mBoxRectF.right,(int)mBoxRectF.bottom);
+                mBox_hasInput_backgroundDrawable.draw(canvas);
+            }else {
+                mBox_default_paint.setColor(mBox_default_hasInputColor);
+                canvas.drawRoundRect(mBoxRectF, mBox_default_radius, mBox_default_radius, mBox_default_paint);
+            }
+
+        }
 
         //绘制输入的内容文字
         mPaintText.getTextBounds(mEnableHideCode ? mEnableHideCode_text : mCodeArray[i], 0, mCodeArray[i].length(), mTextRect);
@@ -442,25 +442,25 @@ public class PasswordView extends LinearLayout {
     }
     //绘制-光标
     private void onDrawCursor(Canvas canvas,Paint paint,RectF rectF){
-            if(null!= mCursorBackgroundDrawable){
-                mCursorBackgroundDrawable.setBounds(
-                        (int)((rectF.left + rectF.right) / 2 - mCursorWidth),
-                        (int)(mCursorHeight <= 1 ? (rectF.top + rectF.bottom) / 4:mCursorHeight ),
-                        (int)((rectF.left + rectF.right) / 2 + mCursorWidth),
-                        (int) (rectF.bottom - (mCursorHeight <= 1 ? (rectF.top + rectF.bottom) / 4:mCursorHeight ))
-                );
-                if((mCursorDisplayingByTimer || mCursorDisplayingByIndex) ){
-                    mCursorBackgroundDrawable.draw(canvas);
-                }
-            }else {
-                paint.setColor((mCursorDisplayingByTimer || mCursorDisplayingByIndex) ? mCursorColor : Color.TRANSPARENT);
-                canvas.drawRect(
-                        (float) ((rectF.left + rectF.right) / 2 - mCursorWidth),
-                        (float) (mCursorHeight <= 1 ? (rectF.top + rectF.bottom) / 4:mCursorHeight ),
-                        (float) ((rectF.left + rectF.right) / 2 + mCursorWidth),
-                        (float) (rectF.bottom - (mCursorHeight <= 1 ? (rectF.top + rectF.bottom) / 4 :mCursorHeight))
-                        , paint);
+        if(null!= mCursorBackgroundDrawable){
+            mCursorBackgroundDrawable.setBounds(
+                    (int)((rectF.left + rectF.right) / 2 - mCursorWidth),
+                    (int)(mCursorHeight <= 1 ? (rectF.top + rectF.bottom) / 4:mCursorHeight ),
+                    (int)((rectF.left + rectF.right) / 2 + mCursorWidth),
+                    (int) (rectF.bottom - (mCursorHeight <= 1 ? (rectF.top + rectF.bottom) / 4:mCursorHeight ))
+            );
+            if((mCursorDisplayingByTimer || mCursorDisplayingByIndex) ){
+                mCursorBackgroundDrawable.draw(canvas);
             }
+        }else {
+            paint.setColor((mCursorDisplayingByTimer || mCursorDisplayingByIndex) ? mCursorColor : Color.TRANSPARENT);
+            canvas.drawRect(
+                    (float) ((rectF.left + rectF.right) / 2 - mCursorWidth),
+                    (float) (mCursorHeight <= 1 ? (rectF.top + rectF.bottom) / 4:mCursorHeight ),
+                    (float) ((rectF.left + rectF.right) / 2 + mCursorWidth),
+                    (float) (rectF.bottom - (mCursorHeight <= 1 ? (rectF.top + rectF.bottom) / 4 :mCursorHeight))
+                    , paint);
+        }
         mCursorDisplayingByIndex=false;
     }
     //开始计时器，开始光标闪烁
@@ -507,6 +507,13 @@ public class PasswordView extends LinearLayout {
     //监听接口回调
     public void setOnResultListener(OnResultListener onResultListener){
         this.mOnResultListener=onResultListener;
+    }
+
+    private int dip2px(Context context, float dipValue) {
+        return (int) (dipValue * (context.getResources().getDisplayMetrics().density) + 0.5f);
+    }
+    private float dip2pxFloat(Context context, float dipValue) {
+        return (float) (dipValue * (context.getResources().getDisplayMetrics().density) + 0.5f);
     }
 
 }
