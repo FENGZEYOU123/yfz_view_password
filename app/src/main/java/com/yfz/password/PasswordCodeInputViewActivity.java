@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class PasswordCodeInputViewActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private ArrayList<View> mList=new ArrayList<>();
     private View mView1,mView2,mView3,mView4,mView5,mView6;
@@ -27,13 +27,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initialViewPager();
-        initialOnListenerStyle1();
-        initialOnListenerStyle2();
-        initialOnListenerStyle3();
-        initialOnListenerStyle4();
-        initialOnListenerStyle5();
-        initialOnListenerStyle6();
+//        initialViewPager();
+//        initialOnListenerStyle1();
+//        initialOnListenerStyle2();
+//        initialOnListenerStyle3();
+//        initialOnListenerStyle4();
+//        initialOnListenerStyle5();
+//        initialOnListenerStyle6();
 
     }
     private void initialViewPager(){
@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
         mList.add(mView4);
         mList.add(mView5);
         mList.add(mView6);
-
-        mViewPager.setAdapter(new ViewPagerAdapter());
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter();
+        mViewPager.setAdapter(viewPagerAdapter);
         mViewPager.setOffscreenPageLimit(mList.size()-1);
 
         mPasswordView1= mView1.findViewById(R.id.passwordView1);
