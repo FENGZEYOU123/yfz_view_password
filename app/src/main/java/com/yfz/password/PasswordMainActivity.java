@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class PasswordMainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private ArrayList<View> mList=new ArrayList<>();
     private View mView1,mView2,mView3,mView4,mView5,mView6;
