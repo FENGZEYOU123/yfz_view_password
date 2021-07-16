@@ -506,7 +506,7 @@ public class PasswordView extends LinearLayout {
 
     //监听接口回调
     public void setOnResultListener(OnResultListener onResultListener){
-        this.mOnResultListener=onResultListener;
+        mOnResultListener=onResultListener;
     }
 
     private int dip2px(Context context, float dipValue) {
